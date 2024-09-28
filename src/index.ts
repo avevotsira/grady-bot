@@ -56,10 +56,27 @@ async function sendScheduledMessage(env: Env) {
       "Grady, your body called. It's thirsty AF!",
       "Grady, if you were a plant, you'd be wilting right now. Water yourself!",
       "Water or else I'll break them pasta in half",
-      "If you don't drink water,I will put pineapple on your pizza!",
+      "If you don't drink water, I will put pineapple on your pizza!",
       "Someone socks will get wet this morning if u don't drink water",
       "Grady, I bet you can't drink a gallon of water in one sitting",
+      "Grady, if you don't drink water, I'll tell everyone you sleep with a nightlight",
+      "Your future self called, Grady. It's begging you to drink water now!",
+      "Grady, drink water or I'll replace all your music with baby shark remixes",
+      "Hey Grady, did you know dehydration makes you look older? Drink up to stay young!",
+      "Grady, if you were on a deserted island, you'd wish for water. Why wait? Drink now!",
+      "Grady, drink water or I'll start using Comic Sans in all our communications",
+      "Your kidneys are plotting revenge if you don't drink water soon, Grady",
+      "Water: cheaper than therapy and better for your health. Drink up, Grady!",
+      "Grady, your water bottle is feeling neglected. Show it some love!",
+      "Grady, drink water or I'll spoil the ending of every movie you want to watch",
+      "Grady, your plants are judging you for not drinking enough water",
+      "Grady, if you don't drink water, I'll make this auto play 'Baby Shark' at full volume",
+      "Grady, your water bottle called. It's feeling abandoned and wants you back",
+      "Grady, if you don't drink water, I'll replace all message 'ILoveJustinBieber'",
+      "Water: because your organs deserve a spa day too, Grady",
+      "Grady, your water bottle called. It's time to refill!",
     ];
+
     // Send a random water message every hour except at 8:00 AM GMT+2
     const waterMsg = getRandomMessage(waterMessages);
     return await sendDiscordDirectMessage(env, env.TARGET_USER_ID, waterMsg);
