@@ -4,7 +4,10 @@ compatibility_flags = [ "nodejs_compat" ]
 
 
 [triggers]
-crons = ["0 6 * * *", "0 8-20/1 * * *"]
+crons = ["0 6 * * *", "0 7-20/1 * * *"]
 
 [vars]
 NODE_ENV = "prod"
+
+[observability]
+enabled = true

@@ -43,7 +43,7 @@ function getRandomMessage(messages: string[]): string {
 async function sendScheduledMessage(env: Env) {
   const currentHour = new Date().getUTCHours() + 2; // Get the current hour in GMT+2
 
-  if (!(currentHour === 8)) {
+  if (currentHour !== 8) {
     const waterMessages = [
       "Either water or I'll spoil dandadan",
       "You know there are virtual characters in an animated zombie survival game right now that wish they had water? DRINK WATER",
