@@ -163,7 +163,7 @@ app.get("/send-message", async (c) => {
 
   try {
     const vitaminMsg = getRandomMessage([
-      "Water or else I'll break them pasta in half",
+      "Water or else I'll break them pasta in half!",
     ]);
     await sendDiscordDirectMessage(c.env, c.env.TARGET_USER_ID, vitaminMsg);
     return c.text("Scheduled message sent successfully!");
