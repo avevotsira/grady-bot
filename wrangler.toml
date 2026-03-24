@@ -10,3 +10,5 @@ NODE_ENV = "prod"
 
 [observability]
 enabled = true
+
+ main = "src/index.ts"
