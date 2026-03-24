@@ -1,15 +1,19 @@
 import { Hono } from "hono";
-import { REST } from "@discordjs/rest";
-import {
-  type RESTPostAPICurrentUserCreateDMChannelResult,
-  Routes,
-} from "discord-api-types/v9";
 import type { Env } from "../bindings";
 
 const app = new Hono<{ Bindings: Env }>();
 
-function createRESTClient(env: Env) {
-  return new REST({ version: "9" }).setToken(env.DISCORD_BOT_TOKEN);
+const DISCORD_API_BASE = "https://discord.com/api/v10";
+
+interface DMChannel {
+  id: string;
+  type: number;
+  last_message_id: string | null;
+  recipients: Array<{
+    id: string;
+    username: string;
+    discriminator: string;
+  }>;
 }
 
 async function sendDiscordDirectMessage(
@@ -17,17 +21,46 @@ async function sendDiscordDirectMessage(
   userId: string,
   message: string
 ): Promise<void> {
-  const rest = createRESTClient(env);
   try {
     // Create a DM channel
-    const dmChannel = (await rest.post(Routes.userChannels(), {
-      body: { recipient_id: userId },
-    })) as RESTPostAPICurrentUserCreateDMChannelResult;
+    const dmResponse = await fetch(`${DISCORD_API_BASE}/users/@me/channels`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ recipient_id: userId }),
+    });
+
+    if (!dmResponse.ok) {
+      const errorText = await dmResponse.text();
+      throw new Error(
+        `Failed to create DM channel: ${dmResponse.status} ${errorText}`
+      );
+    }
+
+    const dmChannel = (await dmResponse.json()) as DMChannel;
 
     // Send the message to the DM channel
-    await rest.post(Routes.channelMessages(dmChannel.id), {
-      body: { content: message },
-    });
+    const messageResponse = await fetch(
+      `${DISCORD_API_BASE}/channels/${dmChannel.id}/messages`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: message }),
+      }
+    );
+
+    if (!messageResponse.ok) {
+      const errorText = await messageResponse.text();
+      throw new Error(
+        `Failed to send message: ${messageResponse.status} ${errorText}`
+      );
+    }
+
     console.log("Direct message sent successfully");
   } catch (error) {
     console.error("Error sending direct message:", error);
