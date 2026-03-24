@@ -1,9 +1,9 @@
-name = "grady-bot"
+name = "light-bot"
 main = "src/index.ts"
 compatibility_date = "2024-09-09"
 
 [triggers]
-crons = ["0 6 * * *", "0 7-20/1 * * *"]
+crons = ["0 14-23,0-1 * * *"]
 
 [vars]
 NODE_ENV = "prod"
