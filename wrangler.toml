@@ -1,6 +1,6 @@
 name = "grady-bot"
+main = "src/index.ts"
 compatibility_date = "2024-09-09"
-
 
 [triggers]
 crons = ["0 6 * * *", "0 7-20/1 * * *"]
@@ -10,5 +10,3 @@ NODE_ENV = "prod"
 
 [observability]
 enabled = true
-
- main = "src/index.ts"
